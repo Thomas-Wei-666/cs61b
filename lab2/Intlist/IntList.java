@@ -5,7 +5,7 @@ import java.util.Formatter;
  * with a large number of additional methods.
  *
  * @author P. N. Hilfinger, with some modifications by Josh Hug and melaniecebula
- *         [Do not modify this file.]
+ * [Do not modify this file.]
  */
 public class IntList {
     /**
@@ -29,7 +29,7 @@ public class IntList {
      * A List with null rest, and first = 0.
      */
     public IntList() {
-    /* NOTE: public IntList () { }  would also work. */
+        /* NOTE: public IntList () { }  would also work. */
         this(0, null);
     }
 
@@ -81,8 +81,18 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+        IntList ptrA = A;
+        IntList ptrB = B;
+        while (ptrA.rest != null) {
+            ptrA = ptrA.rest;
+        }
+        while (ptrB != null) {
+            ptrA.rest = ptrB;
+            ptrA = ptrA.rest;
+            ptrB = ptrB.rest;
+        }
+        ptrA.rest = null;
+        return A;
     }
 
     /**
@@ -90,23 +100,25 @@ public class IntList {
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+        IntList ptrA = A;
+        IntList ptrB = B;
+        IntList res = new IntList();
+        IntList ptr = res;
+        while (ptrA != null) {
+            IntList temp = new IntList(ptrA.first, ptrA.rest);
+            ptr.rest = temp;
+            ptr = temp;
+            ptrA = ptrA.rest;
+        }
+        while (ptrB != null) {
+            IntList temp = new IntList(ptrB.first, ptrB.rest);
+            ptr.rest = temp;
+            ptr = temp;
+            ptrB = ptrB.rest;
+        }
+        res = res.rest;
+        return res;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**
