@@ -83,16 +83,23 @@ public class IntList {
     public static IntList dcatenate(IntList A, IntList B) {
         IntList ptrA = A;
         IntList ptrB = B;
-        while (ptrA.rest != null) {
-            ptrA = ptrA.rest;
+        if (ptrA != null) {
+            while (ptrA.rest != null) {
+                ptrA = ptrA.rest;
+            }
+
+            while (ptrB != null) {
+                ptrA.rest = ptrB;
+                ptrA = ptrA.rest;
+                ptrB = ptrB.rest;
+            }
+            ptrA.rest = null;
+            return A;
         }
-        while (ptrB != null) {
-            ptrA.rest = ptrB;
-            ptrA = ptrA.rest;
-            ptrB = ptrB.rest;
+        else {
+            return B;
         }
-        ptrA.rest = null;
-        return A;
+
     }
 
     /**
