@@ -6,7 +6,7 @@ public class LinkedListDeque<T> {
     /**
      * an inner class to restore necessary data and pointers
      */
-    public class Node {
+    private class Node {
         private Node prev;
         private T item;
         private Node next;
@@ -26,8 +26,6 @@ public class LinkedListDeque<T> {
 
     /**
      * create a empty version of deque
-     *
-     * @param senti_item whose value doesn't matter
      */
     public LinkedListDeque() {
         sentinel = new Node(null, null, null);
@@ -41,16 +39,17 @@ public class LinkedListDeque<T> {
      *
      * @param other another deque that you want to copy.
      */
-    public LinkedListDeque(LinkedListDeque other) {
-        sentinel = new Node(null, null, null);
-        sentinel.next = sentinel;
-        sentinel.prev = sentinel;
-        size = 0;
+    /**public LinkedListDeque(LinkedListDeque other) {
+     sentinel = new Node(null, null, null);
+     sentinel.next = sentinel;
+     sentinel.prev = sentinel;
+     size = 0;
 
-        for (int i = 0; i < other.size; i++) {
-            addLast((T) other.get(i));
-        }
-    }
+     for (int i = 0; i < other.size; i++) {
+     addLast((T) other.get(i));
+     }
+     }
+     */
 
     /**
      * to add an item to the front of the deque
@@ -132,6 +131,7 @@ public class LinkedListDeque<T> {
             Node ptr = sentinel.prev;
             ptr.prev.next = sentinel;
             sentinel.prev = ptr.prev;
+            size--;
             return ptr.item;
         }
     }
