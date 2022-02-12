@@ -4,8 +4,8 @@
  * @author Thomas Wei
  */
 public class ArrayDeque<T> {
-    public static final int REFACTOR = 2;
-    public static final int REDUCE = 2; //0 < REDUCE < 4
+    private static final int REFACTOR = 2;
+    private static final int REDUCE = 2; //0 < REDUCE < 4
 
     private T[] item;
     private int size;
@@ -23,11 +23,13 @@ public class ArrayDeque<T> {
      *
      * @param other the resource of the copy
      */
-    public ArrayDeque(ArrayDeque other) {
-        item = (T[]) new Object[other.size];
-        size = other.size;
-        System.arraycopy(other.item, 0, this.item, 0, size);
-    }
+    /**public ArrayDeque(ArrayDeque other) {
+     item = (T[]) new Object[other.size];
+     size = other.size;
+     System.arraycopy(other.item, 0, this.item, 0, size);
+     }
+
+     */
 
     /**
      * helping method to resize the deque when it's necessary.
@@ -99,6 +101,9 @@ public class ArrayDeque<T> {
      * @return the item removed form the front, null when no such item.
      */
     public T removeFirst() {
+        if (size == 0){
+            return null;
+        }
         T first = item[0];
         if (item.length > 16 && (float) (size - 1) / item.length < 0.25) {
             resize(item.length / REDUCE);

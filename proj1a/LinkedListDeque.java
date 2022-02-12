@@ -7,9 +7,9 @@ public class LinkedListDeque<T> {
      * an inner class to restore necessary data and pointers
      */
     public class Node {
-        public Node prev;
-        public T item;
-        public Node next;
+        private Node prev;
+        private T item;
+        private Node next;
 
         public Node(T item, Node prev, Node next) {
             this.item = item;
