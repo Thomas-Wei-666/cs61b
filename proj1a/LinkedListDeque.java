@@ -154,4 +154,19 @@ public class LinkedListDeque<T> {
             return ptr.item;
         }
     }
+
+    public T getRecursive(int index) {
+        if (index + 1 > size) {
+            return null;
+        } else {
+            return getHelp(sentinel.next, index);
+        }
+    }
+
+    private T getHelp(Node node, int index) {
+        if (index == 0) {
+            return node.item;
+        }
+        return getHelp(node.next, index - 1);
+    }
 }
