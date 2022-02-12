@@ -101,7 +101,7 @@ public class ArrayDeque<T> {
      * @return the item removed form the front, null when no such item.
      */
     public T removeFirst() {
-        if (size == 0){
+        if (size == 0) {
             return null;
         }
         T first = item[0];
@@ -122,6 +122,9 @@ public class ArrayDeque<T> {
      * @return the item removed form the last, null when no such item.
      */
     public T removeLast() {
+        if (size == 0) {
+            return null;
+        }
         T last = item[size - 1];
         if (item.length > 16 && (float) (size - 1) / item.length < 0.25) {
             resize(item.length / REDUCE);
