@@ -4,7 +4,7 @@
  * @author Thomas Wei
  */
 public class ArrayDeque<T> {
-    private static final int REFACTOR = 10;
+    private static final int REFACTOR = 3;
     private static final int REDUCE = 2; //0 < REDUCE < 4
 
     private T[] item;
