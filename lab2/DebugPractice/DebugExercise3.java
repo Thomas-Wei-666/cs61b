@@ -1,7 +1,7 @@
 /**
  * Created by jug on 1/22/18.
  */
-public class DebugExercise3 {
+/*public class DebugExercise3 {
     public static int countTurnips(In in) {
         int totalTurnips = 0;
         while (!in.isEmpty()) {
@@ -23,3 +23,5 @@ public class DebugExercise3 {
         System.out.println(countTurnips(in));
     }
 }
+
+ */
