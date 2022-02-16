@@ -20,11 +20,6 @@ public class Palindrome {
                     return false;
                 }
             }
-            for (int i = 0; i < deque.size(); i++) {
-                if (deque.get(i).equals(' ')) {
-                    return false;
-                }
-            }
         }
         return true;
     }
@@ -36,11 +31,6 @@ public class Palindrome {
         } else {
             for (int i = 0; i < deque.size() / 2; i++) {
                 if (!cc.equalChars(deque.get(i), deque.get(deque.size() - 1 - i))) {
-                    return false;
-                }
-            }
-            for (int i = 0; i < deque.size(); i++) {
-                if (deque.get(i).equals(' ')) {
                     return false;
                 }
             }
