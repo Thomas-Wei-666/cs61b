@@ -70,8 +70,6 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     }
 
 
-
-    @Override
     public void resetMark() {
         fillCount = 0;
         first = 0;
