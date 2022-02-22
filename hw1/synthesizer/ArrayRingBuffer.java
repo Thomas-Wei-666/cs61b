@@ -79,14 +79,11 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         private int ptr;
 
         public MyIterator() {
-            ptr = first - 1;
-            if (ptr < 0) {
-                ptr += capacity;
-            }
+            ptr = 0;
         }
 
         public boolean hasNext() {
-            if (ptr == last - 1) {
+            if (ptr == capacity - 1) {
                 return false;
             }
             return true;
@@ -94,11 +91,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
 
         public T next() {
             T res = rb[ptr];
-            if (ptr == capacity - 1) {
-                ptr = 0;
-            } else {
-                ptr += 1;
-            }
+            ptr++;
             return res;
         }
     }
