@@ -12,7 +12,7 @@ public class GuitarString {
     private static final double DECAY = .996; // energy decay factor
 
     /* Buffer for storing sound data. */
-    private ArrayRingBuffer<Double> buffer;
+    private BoundedQueue<Double> buffer;
 
     /* Create a guitar string of the given frequency.  */
     public GuitarString(double frequency) {
@@ -20,12 +20,16 @@ public class GuitarString {
         while (!buffer.isFull()) {
             buffer.enqueue(0.0);
         }
-        buffer.resetMark();
     }
 
 
     /* Pluck the guitar string by replacing the buffer with white noise. */
     public void pluck() {
+        while (!buffer.isEmpty()) {
+            buffer.dequeue();
+        }
+
+
         while (!buffer.isFull()) {
             double r = Math.random() - 0.5;
             buffer.enqueue(r);

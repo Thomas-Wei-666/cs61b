@@ -70,12 +70,6 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     }
 
 
-    public void resetMark() {
-        fillCount = 0;
-        first = 0;
-        last = 0;
-    }
-
     @Override
     public Iterator<T> iterator() {
         return new MyIterator();
@@ -85,7 +79,10 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         private int ptr;
 
         public MyIterator() {
-            ptr = first;
+            ptr = first - 1;
+            if (ptr < 0) {
+                ptr += capacity;
+            }
         }
 
         public boolean hasNext() {
