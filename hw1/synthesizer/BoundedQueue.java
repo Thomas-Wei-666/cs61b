@@ -11,6 +11,8 @@ public interface BoundedQueue<T> {
 
     T peek();           // return (but do not delete) item from the front
 
+    void resetMark();
+
     default boolean isEmpty() {
         return fillCount() == 0;
     }       // is the buffer empty (fillCount equals zero)?

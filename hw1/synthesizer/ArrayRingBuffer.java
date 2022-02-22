@@ -30,11 +30,11 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      */
     @Override
     public void enqueue(T x) {
-        if (fillCount == capacity) {
+        if (isFull()) {
             throw new RuntimeException("Ring buffer overflow");
         }
         rb[last] = x;
-        if (last == capacity) {
+        if (last == capacity - 1) {
             last = 0;
         } else {
             last++;
@@ -48,11 +48,11 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      * covered Monday.
      */
     public T dequeue() {
-        if (fillCount == 0) {
+        if (isEmpty()) {
             throw new RuntimeException("Ring buffer underflow");
         }
         T res = rb[first];
-        if (first == capacity) {
+        if (first == capacity - 1) {
             first = 0;
         } else {
             first++;
@@ -65,9 +65,9 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      * Return oldest item, but don't remove it.
      */
     public T peek() {
-        if (fillCount == 0) {
-            return null;
-        }
+//        if (isEmpty()) {
+//            throw new RuntimeException("can't peek an empty buffer");
+//        }
         return rb[first];
     }
 
@@ -81,6 +81,11 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         return fillCount;
     }
 
-
+    @Override
+    public void resetMark() {
+        fillCount = 0;
+        first = 0;
+        last = 0;
+    }
     // TODO: When you get to part 5, implement the needed code to support iteration.
 }
