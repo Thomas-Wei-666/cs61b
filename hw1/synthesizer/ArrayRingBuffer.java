@@ -63,21 +63,13 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      * Return oldest item, but don't remove it.
      */
     public T peek() {
-//        if (isEmpty()) {
-//            throw new RuntimeException("can't peek an empty buffer");
-//        }
+        if (isEmpty()) {
+            throw new RuntimeException("can't peek an empty buffer");
+        }
         return rb[first];
     }
 
-    @Override
-    public int capacity() {
-        return capacity;
-    }
 
-    @Override
-    public int fillCount() {
-        return fillCount;
-    }
 
     @Override
     public void resetMark() {
@@ -95,7 +87,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         private int ptr;
 
         public MyIterator() {
-            ptr = 0;
+            ptr = first;
         }
 
         public boolean hasNext() {
@@ -107,7 +99,11 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
 
         public T next() {
             T res = rb[ptr];
-            ptr += 1;
+            if (ptr == capacity - 1) {
+                ptr = 0;
+            } else {
+                ptr += 1;
+            }
             return res;
         }
     }
