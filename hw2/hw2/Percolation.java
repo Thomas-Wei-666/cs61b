@@ -12,6 +12,9 @@ public class Percolation {
 
     // create N-by-N grid, with all sites initially blocked
     public Percolation(int N) {
+        if (N<=0){
+            throw new IllegalArgumentException("N must larger than 0");
+        }
         this.grid = new boolean[N][N];
         this.N = N;
         this.weightedQuickUnionUF = new WeightedQuickUnionUF(N * N + 1);
@@ -20,8 +23,9 @@ public class Percolation {
 
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
-        isValid(row);
-        isValid(col);
+        if (row < 0 || row >= N || col < 0 || col >= N) {
+            throw new IndexOutOfBoundsException("row and col must between 0 and N - 1");
+        }
         if (isOpen(row, col)) {
             return weightedQuickUnionUF.connected(linerConvert(row, col), N * N);
         }
@@ -30,8 +34,9 @@ public class Percolation {
 
     // open the site (row, col) if it is not open already
     public void open(int row, int col) {
-        isValid(row);
-        isValid(col);
+        if (row < 0 || row >= N || col < 0 || col >= N) {
+            throw new IndexOutOfBoundsException("row and col must between 0 and N - 1");
+        }
         if (isOpen(row, col)) {
             return;
         }
@@ -39,6 +44,7 @@ public class Percolation {
             weightedQuickUnionUF.union(linerConvert(row, col), N * N);
             grid[row][col] = true;
             firstOpenFlag = false;
+            countOpen++;
         } else {
             grid[row][col] = true;
             modifyFull(row, col);
@@ -48,8 +54,9 @@ public class Percolation {
 
     // is the site (row, col) open?
     public boolean isOpen(int row, int col) {
-        isValid(row);
-        isValid(col);
+        if (row < 0 || row >= N || col < 0 || col >= N) {
+            throw new IndexOutOfBoundsException("row and col must between 0 and N - 1");
+        }
         return grid[row][col];
     }
 
@@ -60,13 +67,9 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
-        int TopLoc = findFullInRowX(0);
-        int BottomLoc = findFullInRowX(N - 1);
-        if (TopLoc < 0 || BottomLoc < 0) {
-            return false;
-        } else {
-            return true;
-        }
+        int topLoc = findFullInRowX(0);
+        int bottomLoc = findFullInRowX(N - 1);
+        return topLoc >= 0 && bottomLoc >= 0;
     }
 
     private void isValid(int lenth) {

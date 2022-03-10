@@ -14,12 +14,12 @@ public class PercolationStats {
         if (N <= 0 || T <= 0) {
             throw new IllegalArgumentException("N or T must be positive");
         }
-        percolation = pf.make(N);
         this.T = T;
         this.N = N;
         x = new double[T];
 
         for (int i = 0; i < T; i++) {
+            percolation = pf.make(N);
             for (int j = 0; j < N * N; j++) {
                 if (percolation.percolates()) {
                     break;
