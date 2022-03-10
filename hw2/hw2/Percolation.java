@@ -37,6 +37,7 @@ public class Percolation {
         }
         if (firstOpenFlag) {
             weightedQuickUnionUF.union(linerConvert(row, col), N * N);
+            grid[row][col] = true;
             firstOpenFlag = false;
         } else {
             grid[row][col] = true;
@@ -148,5 +149,8 @@ public class Percolation {
 
     }
 
+    public static void main(String[] args) {
+
+    }
 
 }
