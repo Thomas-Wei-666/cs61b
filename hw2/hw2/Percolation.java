@@ -29,10 +29,8 @@ public class Percolation {
         if (row < 0 || row >= N || col < 0 || col >= N) {
             throw new IndexOutOfBoundsException("row and col must between 0 and N - 1");
         }
-        if (isOpen(row, col)) {
-            return weightedQuickUnionUF.connected(linerConvert(row, col), head);
-        }
-        return false;
+        return weightedQuickUnionUF.connected(linerConvert(row, col), head);
+
     }
 
     // open the site (row, col) if it is not open already
@@ -81,7 +79,6 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
-
         return weightedQuickUnionUF.connected(head, tail);
     }
 
