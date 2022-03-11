@@ -7,12 +7,11 @@ public class Percolation {
     private int N;
     private WeightedQuickUnionUF weightedQuickUnionUF;
     private int countOpen;
-    private boolean firstOpenFlag = true;
 
 
     // create N-by-N grid, with all sites initially blocked
     public Percolation(int N) {
-        if (N<=0){
+        if (N <= 0) {
             throw new IllegalArgumentException("N must larger than 0");
         }
         this.grid = new boolean[N][N];
@@ -40,15 +39,24 @@ public class Percolation {
         if (isOpen(row, col)) {
             return;
         }
-        if (firstOpenFlag) {
+        grid[row][col] = true;
+        countOpen++;
+
+        if (row == 0) {
             weightedQuickUnionUF.union(linerConvert(row, col), N * N);
-            grid[row][col] = true;
-            firstOpenFlag = false;
-            countOpen++;
         } else {
-            grid[row][col] = true;
-            modifyFull(row, col);
-            countOpen++;
+            if (isOpen(row - 1, col)) {
+                weightedQuickUnionUF.union(linerConvert(row, col), linerConvert(row - 1, col));
+            }
+            if ((row + 1 < N && isOpen(row + 1, col))) {
+                weightedQuickUnionUF.union(linerConvert(row, col), linerConvert(row + 1, col));
+            }
+            if ((col - 1) >= 0 && isOpen(row, col - 1)) {
+                weightedQuickUnionUF.union(linerConvert(row, col), linerConvert(row, col - 1));
+            }
+            if ((col + 1) < N && isOpen(row, col + 1)) {
+                weightedQuickUnionUF.union(linerConvert(row, col + 1), linerConvert(row, col));
+            }
         }
     }
 
@@ -99,58 +107,58 @@ public class Percolation {
         }
     }
 
-    private int surroundCheck(int row, int col) {
-        if (row - 1 >= 0) {
-            if (isFull(row - 1, col)) {
-                return linerConvert(row - 1, col);
-            }
-        }
-        if (col - 1 >= 0) {
-            if (isFull(row, col - 1)) {
-                return linerConvert(row, col - 1);
-            }
-        }
-        if (row + 1 < N) {
-            if (isFull(row + 1, col)) {
-                return linerConvert(row + 1, col);
-            }
-        }
-        if (col + 1 < N) {
-            if (isFull(row, col + 1)) {
-                return linerConvert(row, col + 1);
-            }
-        }
-        return -1;
-    }
-
-    private void modifyFull(int row, int col) {
-        if (surroundCheck(row, col) == -1) {
-            return;
-        } else {
-            weightedQuickUnionUF.union(linerConvert(row, col), N * N);
-            if (row - 1 >= 0) {
-                if (isOpen(row - 1, col) && !isFull(row - 1, col)) {
-                    modifyFull(row - 1, col);
-                }
-            }
-            if (row + 1 < N) {
-                if (isOpen(row + 1, col) && !isFull(row + 1, col)) {
-                    modifyFull(row + 1, col);
-                }
-            }
-            if (col - 1 >= 0) {
-                if (isOpen(row, col - 1) && !isFull(row, col - 1)) {
-                    modifyFull(row, col - 1);
-                }
-            }
-            if (col + 1 < N) {
-                if (isOpen(row, col + 1) && !isFull(row, col + 1)) {
-                    modifyFull(row, col + 1);
-                }
-            }
-        }
-
-    }
+//    private int surroundCheck(int row, int col) {
+//        if (row - 1 >= 0) {
+//            if (isFull(row - 1, col)) {
+//                return linerConvert(row - 1, col);
+//            }
+//        }
+//        if (col - 1 >= 0) {
+//            if (isFull(row, col - 1)) {
+//                return linerConvert(row, col - 1);
+//            }
+//        }
+//        if (row + 1 < N) {
+//            if (isFull(row + 1, col)) {
+//                return linerConvert(row + 1, col);
+//            }
+//        }
+//        if (col + 1 < N) {
+//            if (isFull(row, col + 1)) {
+//                return linerConvert(row, col + 1);
+//            }
+//        }
+//        return -1;
+//    }
+//
+//    private void modifyFull(int row, int col) {
+//        if (surroundCheck(row, col) == -1) {
+//            return;
+//        } else {
+//            weightedQuickUnionUF.union(linerConvert(row, col), N * N);
+//            if (row - 1 >= 0) {
+//                if (isOpen(row - 1, col) && !isFull(row - 1, col)) {
+//                    modifyFull(row - 1, col);
+//                }
+//            }
+//            if (row + 1 < N) {
+//                if (isOpen(row + 1, col) && !isFull(row + 1, col)) {
+//                    modifyFull(row + 1, col);
+//                }
+//            }
+//            if (col - 1 >= 0) {
+//                if (isOpen(row, col - 1) && !isFull(row, col - 1)) {
+//                    modifyFull(row, col - 1);
+//                }
+//            }
+//            if (col + 1 < N) {
+//                if (isOpen(row, col + 1) && !isFull(row, col + 1)) {
+//                    modifyFull(row, col + 1);
+//                }
+//            }
+//        }
+//
+//    }
 
     public static void main(String[] args) {
 
