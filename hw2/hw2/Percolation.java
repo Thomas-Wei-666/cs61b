@@ -38,21 +38,22 @@ public class Percolation {
         if (row < 0 || row >= N || col < 0 || col >= N) {
             throw new IndexOutOfBoundsException("row and col must between 0 and N - 1");
         }
-        if (isOpen(row, col)) {
-            return;
-        }
-        grid[row][col] = true;
-        countOpen++;
+        if (!isOpen(row, col)) {
+            grid[row][col] = true;
+            countOpen++;
 
-        if (row == 0) {
-            weightedQuickUnionUF.union(linerConvert(row, col), head);
-        } else if (row == N - 1) {
-            weightedQuickUnionUF.union(linerConvert(row, col), tail);
-        } else {
-            if (isOpen(row - 1, col)) {
+            if (row == 0) {
+                weightedQuickUnionUF.union(linerConvert(row, col), head);
+            }
+            if (row == N - 1) {
+                weightedQuickUnionUF.union(linerConvert(row, col), tail);
+            }
+
+
+            if (row - 1 >= 0 && isOpen(row - 1, col)) {
                 weightedQuickUnionUF.union(linerConvert(row, col), linerConvert(row - 1, col));
             }
-            if (row + 1 < N && isOpen(row + 1, col)) {
+            if (row + 1 < N - 1 && isOpen(row + 1, col)) {
                 weightedQuickUnionUF.union(linerConvert(row, col), linerConvert(row + 1, col));
             }
             if ((col - 1) >= 0 && isOpen(row, col - 1)) {
@@ -62,6 +63,7 @@ public class Percolation {
                 weightedQuickUnionUF.union(linerConvert(row, col + 1), linerConvert(row, col));
             }
         }
+
     }
 
     // is the site (row, col) open?
