@@ -7,6 +7,8 @@ public class Percolation {
     private int N;
     private WeightedQuickUnionUF weightedQuickUnionUF;
     private int countOpen;
+    private int head;
+    private int tail;
 
 
     // create N-by-N grid, with all sites initially blocked
@@ -16,8 +18,10 @@ public class Percolation {
         }
         this.grid = new boolean[N][N];
         this.N = N;
-        this.weightedQuickUnionUF = new WeightedQuickUnionUF(N * N + 1);
+        this.weightedQuickUnionUF = new WeightedQuickUnionUF(N * N + 2);
         this.countOpen = 0;
+        head = N * N;
+        tail = N * N + 1;
     }
 
     // is the site (row, col) full?
@@ -26,7 +30,7 @@ public class Percolation {
             throw new IndexOutOfBoundsException("row and col must between 0 and N - 1");
         }
         if (isOpen(row, col)) {
-            return weightedQuickUnionUF.connected(linerConvert(row, col), N * N);
+            return weightedQuickUnionUF.connected(linerConvert(row, col), head);
         }
         return false;
     }
@@ -43,12 +47,14 @@ public class Percolation {
         countOpen++;
 
         if (row == 0) {
-            weightedQuickUnionUF.union(linerConvert(row, col), N * N);
+            weightedQuickUnionUF.union(linerConvert(row, col), head);
+        } else if (row == N - 1) {
+            weightedQuickUnionUF.union(linerConvert(row, col), tail);
         } else {
             if (isOpen(row - 1, col)) {
                 weightedQuickUnionUF.union(linerConvert(row, col), linerConvert(row - 1, col));
             }
-            if ((row + 1 < N && isOpen(row + 1, col))) {
+            if (row + 1 < N && isOpen(row + 1, col)) {
                 weightedQuickUnionUF.union(linerConvert(row, col), linerConvert(row + 1, col));
             }
             if ((col - 1) >= 0 && isOpen(row, col - 1)) {
@@ -75,9 +81,8 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
-        int topLoc = findFullInRowX(0);
-        int bottomLoc = findFullInRowX(N - 1);
-        return topLoc >= 0 && bottomLoc >= 0;
+
+        return weightedQuickUnionUF.connected(head, tail);
     }
 
     private void isValid(int lenth) {
@@ -90,75 +95,6 @@ public class Percolation {
         return row * N + col;
     }
 
-    private int findFullInRowX(int rowX) {
-        isValid(rowX);
-        int res = -1;
-        int i = 0;
-        for (; i < N; i++) {
-            if (isFull(rowX, i)) {
-                res = i;
-                break;
-            }
-        }
-        if (res == -1) {
-            return -1;
-        } else {
-            return linerConvert(rowX, res);
-        }
-    }
-
-//    private int surroundCheck(int row, int col) {
-//        if (row - 1 >= 0) {
-//            if (isFull(row - 1, col)) {
-//                return linerConvert(row - 1, col);
-//            }
-//        }
-//        if (col - 1 >= 0) {
-//            if (isFull(row, col - 1)) {
-//                return linerConvert(row, col - 1);
-//            }
-//        }
-//        if (row + 1 < N) {
-//            if (isFull(row + 1, col)) {
-//                return linerConvert(row + 1, col);
-//            }
-//        }
-//        if (col + 1 < N) {
-//            if (isFull(row, col + 1)) {
-//                return linerConvert(row, col + 1);
-//            }
-//        }
-//        return -1;
-//    }
-//
-//    private void modifyFull(int row, int col) {
-//        if (surroundCheck(row, col) == -1) {
-//            return;
-//        } else {
-//            weightedQuickUnionUF.union(linerConvert(row, col), N * N);
-//            if (row - 1 >= 0) {
-//                if (isOpen(row - 1, col) && !isFull(row - 1, col)) {
-//                    modifyFull(row - 1, col);
-//                }
-//            }
-//            if (row + 1 < N) {
-//                if (isOpen(row + 1, col) && !isFull(row + 1, col)) {
-//                    modifyFull(row + 1, col);
-//                }
-//            }
-//            if (col - 1 >= 0) {
-//                if (isOpen(row, col - 1) && !isFull(row, col - 1)) {
-//                    modifyFull(row, col - 1);
-//                }
-//            }
-//            if (col + 1 < N) {
-//                if (isOpen(row, col + 1) && !isFull(row, col + 1)) {
-//                    modifyFull(row, col + 1);
-//                }
-//            }
-//        }
-//
-//    }
 
     public static void main(String[] args) {
 
