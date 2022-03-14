@@ -84,11 +84,6 @@ public class Percolation {
         return weightedQuickUnionUF.connected(head, tail);
     }
 
-    private void isValid(int lenth) {
-        if (lenth >= N || lenth < 0) {
-            throw new IllegalArgumentException("row or col must >= 0 or < N");
-        }
-    }
 
     private int linerConvert(int row, int col) {
         return row * N + col;
