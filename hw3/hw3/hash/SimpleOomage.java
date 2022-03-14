@@ -25,8 +25,8 @@ public class SimpleOomage implements Oomage {
         if (o.getClass() != this.getClass()) {
             return false;
         }
-        SimpleOomage simpleOomage = (SimpleOomage) o;
-        return simpleOomage.blue == this.blue && simpleOomage.green == this.green && simpleOomage.red == this.red;
+        SimpleOomage o1 = (SimpleOomage) o;
+        return o1.blue == this.blue && o1.green == this.green && o1.red == this.red;
     }
 
     @Override

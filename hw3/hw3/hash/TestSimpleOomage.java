@@ -1,15 +1,10 @@
 package hw3.hash;
 
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
-
-import java.util.Set;
 import java.util.HashSet;
-import java.util.List;
-import java.util.ArrayList;
+
+import static org.junit.Assert.*;
 
 
 public class TestSimpleOomage {
@@ -25,19 +20,16 @@ public class TestSimpleOomage {
 
     @Test
     public void testHashCodePerfect() {
-        /* TODO: Write a test that ensures the hashCode is perfect,
-          meaning no two SimpleOomages should EVER have the same
-          hashCode UNLESS they have the same red, blue, and green values!
-         */
-        SimpleOomage ooA = new SimpleOomage(10,20,30);
-        SimpleOomage ooA2 = new SimpleOomage(20,10,30);
 
-        SimpleOomage ooB = new SimpleOomage(10,20,30);
+        SimpleOomage ooA = new SimpleOomage(10, 20, 30);
+        SimpleOomage ooA2 = new SimpleOomage(20, 10, 30);
+
+        SimpleOomage ooB = new SimpleOomage(10, 20, 30);
 
         HashSet<SimpleOomage> hashSet = new HashSet<>();
         hashSet.add(ooA);
-        assertEquals(false,hashSet.contains(ooA2));
-        assertEquals(true,hashSet.contains(ooB));
+        assertEquals(false, hashSet.contains(ooA2));
+        assertEquals(true, hashSet.contains(ooB));
     }
 
     @Test
@@ -73,7 +65,9 @@ public class TestSimpleOomage {
         assertTrue(OomageTestUtility.haveNiceHashCodeSpread(oomages, 10));
     }*/
 
-    /** Calls tests for SimpleOomage. */
+    /**
+     * Calls tests for SimpleOomage.
+     */
     public static void main(String[] args) {
         jh61b.junit.textui.runClasses(TestSimpleOomage.class);
     }
